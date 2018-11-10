@@ -22,9 +22,9 @@ var obj={
         // console.log(this.markedproduct);
     },
 
-    deleteProduct : function(){
+    deleteProduct : function(id){
         this.itemlist = this.itemlist.filter(function(obj){
-            return obj.selected == false;
+            return obj.id != id;
         });
     },
 

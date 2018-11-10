@@ -28,7 +28,7 @@ function addItem(){
 
 function printProduct(list){
     var tabla = document.getElementById("tbListPers");
-    //tabla.innerHTML="";
+    tabla.innerHTML="";
     // console.log(list);
 
     list.forEach(function(object){
@@ -47,14 +47,28 @@ function printProduct(list){
         td.innerHTML = object.desc;
         tr.appendChild(td);
         var td = document.createElement("td");
+        //Boton Editar
         var button = document.createElement("button");
         button.type="button";
-        button.innerText = "Eliminar";
-        tr.appendChild(button);
-        td.innerHTML = object.desc;
+        button.id= object.id;
+        button.className="btn btn-primary glyphicon glyphicon-edit";
+        td.appendChild(button);
         tr.appendChild(td);
-
+        //Boton Eliminar
+        var button = document.createElement("button");
+        button.type="button";
+        button.id= object.id;
+        button.addEventListener('click',function (){
+            removeItem(object.id);
+        },false);
+        button.className="btn btn-danger glyphicon glyphicon-trash";
+        td.appendChild(button);
+        tr.appendChild(td);
         tabla.appendChild(tr);
-        //li.addEventListener("click",markProduct);
-    })
+    });
+}
+function removeItem(id){
+    console.log(id);
+    obj.deleteProduct(id);
+    printProduct(obj.itemlist);
 }
