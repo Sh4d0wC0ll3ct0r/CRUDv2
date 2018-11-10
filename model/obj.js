@@ -28,29 +28,27 @@ var obj={
         });
     },
 
-    editProduct : function(id,name,price,desc){
-        edititem = new Product(id,name,price,desc);
-
-        console.log("in obj");
-
-        var oldobject = this.itemlist.filter(function(object){
-            if(object.id==edititem.id){
-                console.log(object);
-                return object.id; 
+    editProduct : function(id){
+        this.itemlist.map(function(dato){
+            if(dato.id == id){
+               // dato.Precio = precioDescuento;
             }
-        })
 
-        console.log("old object   "+oldobject[0].id);
-        console.log("edited object    "+edititem.id);
+            return dato;
+        });
 
-        index = this.itemlist.findIndex(x=>x.id==oldobject[0].id);
-        console.log(index);
-        if(index!==-1){
-            this.itemlist[index]=edititem;
+
+    },
+
+        searchItem : function(id) {
+
+           return this.itemlist.find(function (dato) {
+                if (dato.id == id) {
+                    return dato;
+                }
+            });
         }
 
-        console.log(this.itemlist);
-
-    }
 
 }
+

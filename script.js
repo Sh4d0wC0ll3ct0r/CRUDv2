@@ -51,6 +51,9 @@ function printProduct(list){
         var button = document.createElement("button");
         button.type="button";
         button.id= object.id;
+        button.addEventListener('click',function (){
+            editItem(object.id);
+        },false);
         button.className="btn btn-primary glyphicon glyphicon-edit";
         td.appendChild(button);
         tr.appendChild(td);
@@ -67,8 +70,26 @@ function printProduct(list){
         tabla.appendChild(tr);
     });
 }
-function removeItem(id){
+function editItem(id){
+    var objItem = obj.searchItem(id);
+
+    document.getElementById("caja_1").value = objItem.name;
+    document.getElementById("caja_2").value = objItem.price;
+    document.getElementById("caja_3").value = objItem.desc;
+
+    //Aqui falta cambiar el boton de Añadir a Guardar y poner un nuevo evento con la funcion updateItem.
+ }
+
+
+
+function updateItem(){
     console.log(id);
+    obj.editProduct(id);
+    printProduct(obj.itemlist);
+}
+
+
+function removeItem(id){
     obj.deleteProduct(id);
     printProduct(obj.itemlist);
 }
