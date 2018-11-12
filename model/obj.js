@@ -28,10 +28,12 @@ var obj={
         });
     },
 
-    editProduct : function(id){
+    editProduct : function(id,name,price,desc){
         this.itemlist.map(function(dato){
             if(dato.id == id){
-               // dato.Precio = precioDescuento;
+                dato.name = name;
+                dato.price = price;
+                dato.desc = desc;
             }
 
             return dato;

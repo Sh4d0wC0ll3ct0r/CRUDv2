@@ -14,12 +14,33 @@ function init(e){
     prodDesc = getId('caja_3');
     //Tenemos el control del boton add
     botonAdd = getId('add');
-    botonAdd.addEventListener('click',addItem,false);
+    eventos();
 
+}
+function eventos(){
+
+    document.addEventListener('click',function(e){
+        // Fixed
+
+        if(e.target.tagName.toLowerCase() === 'button'){
+            if(e.target.id.toLowerCase() === 'add'){
+                console.log(e.target.id);
+                addItem();
+            }
+            if(e.target.id.toLowerCase() === 'update'){
+                console.log(e.target.id);
+                updateItem();
+            }
+
+            if(e.target.name === 'remove'){
+                removeItem(e.target.id);
+            }
+        }
+    })
 }
 function addItem(){
     obj.addProduct(prodNombre.value,proPrecio.value,prodDesc.value);
-    console.log(obj.itemlist);
+    //console.log(obj.itemlist);
     printProduct(obj.itemlist);
 
     document.myform.reset();
@@ -27,6 +48,7 @@ function addItem(){
 }
 
 function printProduct(list){
+
     var tabla = document.getElementById("tbListPers");
     tabla.innerHTML="";
     // console.log(list);
@@ -51,9 +73,9 @@ function printProduct(list){
         var button = document.createElement("button");
         button.type="button";
         button.id= object.id;
-        button.addEventListener('click',function (){
+       /* button.addEventListener('click',function (){
             editItem(object.id);
-        },false);
+        },false);*/
         button.className="btn btn-primary glyphicon glyphicon-edit";
         td.appendChild(button);
         tr.appendChild(td);
@@ -61,9 +83,10 @@ function printProduct(list){
         var button = document.createElement("button");
         button.type="button";
         button.id= object.id;
-        button.addEventListener('click',function (){
+        button.name = "remove";
+      /*  button.addEventListener('click',function (){
             removeItem(object.id);
-        },false);
+        },false);*/
         button.className="btn btn-danger glyphicon glyphicon-trash";
         td.appendChild(button);
         tr.appendChild(td);
@@ -78,13 +101,26 @@ function editItem(id){
     document.getElementById("caja_3").value = objItem.desc;
 
     //Aqui falta cambiar el boton de Añadir a Guardar y poner un nuevo evento con la funcion updateItem.
+    document.getElementById("add").removeEventListener("click", addItem,false);
+    document.getElementById("add").setAttribute("id","update");
+    document.getElementById("update").innerText = "Guardar";
+    document.getElementById("update").addEventListener("click",function(){
+        updateItem(id);
+    },false);
  }
 
 
 
-function updateItem(){
-    console.log(id);
-    obj.editProduct(id);
+function updateItem(id){
+
+    obj.editProduct(id,prodNombre.value,proPrecio.value,prodDesc.value);
+    document.getElementById("update").removeEventListener("click",function(){
+        updateItem(id);
+    },false);
+    document.getElementById("update").setAttribute("id","add");
+    document.getElementById("add").innerText = "Add";
+    document.getElementById("add").addEventListener('click',addItem,false);
+    document.myform.reset();
     printProduct(obj.itemlist);
 }
 
